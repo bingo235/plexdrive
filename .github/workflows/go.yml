@@ -17,11 +17,9 @@ jobs:
       matrix:
         go:
           - "1.15"
-          - "1.14"
-          - "1.13"
 
     steps:
-      - name: Set up Go 1.x
+      - name: Set up Go 1.15
         uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go }}
@@ -45,4 +43,4 @@ jobs:
         if: (!cancelled())
         with:
           name: plexdrive
-          path: ./
+          path: ./plexdrive
