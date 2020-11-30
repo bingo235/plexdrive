@@ -1,8 +1,13 @@
 name: Go
 
 on:
-  - push
-  - pull_request
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
 
 jobs:
 
@@ -17,7 +22,6 @@ jobs:
           - '1.13'
 
     steps:
-
       - name: Set up Go 1.x
         uses: actions/setup-go@v2
         with:
@@ -39,3 +43,9 @@ jobs:
 
       - name: Test
         run: go test -v ./...
+
+      - name: Upload
+      uses: actions/upload-artifact@main
+      with:
+        name: plexdrive
+        path: ./
