@@ -5,21 +5,20 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: 'SSH connection to Actions'
+        description: "SSH connection to Actions"
         required: false
-        default: 'false'
+        default: "false"
 
 jobs:
-
   build:
     name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         go:
-          - '1.15'
-          - '1.14'
-          - '1.13'
+          - "1.15"
+          - "1.14"
+          - "1.13"
 
     steps:
       - name: Set up Go 1.x
@@ -41,11 +40,9 @@ jobs:
       - name: Build
         run: go build -v .
 
-      - name: Test
-        run: go test -v ./...
-
       - name: Upload
         uses: actions/upload-artifact@main
+        if: (!cancelled())
         with:
           name: plexdrive
           path: ./
